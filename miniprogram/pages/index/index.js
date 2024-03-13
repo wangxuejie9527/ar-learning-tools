@@ -17,8 +17,8 @@ Page({
     useVideo1: false,
     useVideo2: false,
     markerList: [],
-    markerDesc:'这里是展示扫描结果详情',
-    markerTitle:'结果标题',
+    markerDesc:'AR 学习助手，快去扫描课本图片试试吧！',
+    markerTitle:'',
     // scan 相关
     showMarkerWrap: false,
     markerLeft: -50,

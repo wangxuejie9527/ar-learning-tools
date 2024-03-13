@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "container-viewer": "../../components/container-viewer/index",
+    "ar-tracker": "../../components/ar-tracker/index"
+  },
+  "disableScroll": true, "renderer": "webview",
+  "navigationStyle": "custom"
+}

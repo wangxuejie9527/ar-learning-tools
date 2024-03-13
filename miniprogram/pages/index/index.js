@@ -31,11 +31,16 @@ Page({
     debugMsg: 'Defalut Words'
   },
   onLoad( ) {
+    // 初始化云服务
+    this.initCloud();
+    // 初始化数据
+    this.refreshData();
+  },
+  initCloud() {
     wx.cloud.init({
       env: 'ar-4gs53kcqc5890b4c',
       traceUser: true,
     })
-    this.refreshData();
   },
   resetData() {
     this.setData({
@@ -48,6 +53,7 @@ Page({
     })
   },
   refreshData() {
+    // 重置页面数据
     this.resetData();
 
     // 需要使用的marker
@@ -58,6 +64,7 @@ Page({
     let gltfIndex = 0
     let that = this
 
+    // 读取数据，初始化需要的识别信息
     const db = wx.cloud.database();
     db.collection('ar-tracker').get({
       success: function (res) {
@@ -114,6 +121,8 @@ Page({
     })
   },
   handleTrackerChange(cur) {
+    // ar 识别后回调函数
+    // 设置扫描需要展示的信息
     const item = cur.detail;
     var markDesc = item.desc;
     markDesc = markDesc.replace(/\\n/g, '\n');
@@ -126,6 +135,7 @@ Page({
     console.log('cur', cur)
   },
   handleTrackerMove(cur) {
+    // 处理镜头移动
     const detail = cur.detail
     const trackerInfo = detail.trackerInfo
     

@@ -1,4 +1,8 @@
 Component({
+  /**
+   * 页面容器组件
+   * for 统一化页面展示格式
+   */
   properties: {
     title: {
       type: String,

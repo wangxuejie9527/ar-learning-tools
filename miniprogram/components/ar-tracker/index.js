@@ -1,12 +1,15 @@
+// ar组件
 Component({
   innerInterval: 0,
   videoId: -1,
+  // 组件定义变量
   properties: {
     markerListRaw: {
       type: Array,
       value: []
     },
   },
+  // 组件内部参数
   data: {
     loaded: true,
     arReady: false,
@@ -16,6 +19,7 @@ Component({
     markerWidth: 1,
     markerHeight: 1,
   },
+  // 组件观察变量变化回调
   observers: {
     markerListRaw(newVal) {
       this.setData({
@@ -23,6 +27,7 @@ Component({
       })
     },
   },
+  // 生命周期函数
   lifetimes: {
     detached() {
       // 关闭时候去除计时器
@@ -31,6 +36,12 @@ Component({
   },
   methods: {
     handleReady({detail}) {
+      /**
+       * xrScene 初始化完成后触发事件函数
+       * 初始化需要识别的img
+       * 预加载 gltf模型
+       */
+
       const xrScene = this.scene = detail.value;
       console.log('xr-scene', xrScene);
 
@@ -38,7 +49,7 @@ Component({
       // 加载场景资源
       const gltfResList = [];
       const videoResList = [];
-
+      // 识别内容分类
       const markerList = this.data.markerList;
       for(let i = 0; i < markerList.length; i++) {
         const marker = markerList[i];
@@ -51,7 +62,7 @@ Component({
             break;
         }
       }
-
+      // 预加载 gltf模型
       try {
         this.loadGLTF(gltfResList)
       } catch (err) {
@@ -59,10 +70,14 @@ Component({
       }
     },
     handleARReady: function() {
+      // ar 初始化完成回调
       console.log('arReady')
       this.setData({ arReady: true })
     },
     async loadGLTF(gltfList) {
+      /**
+       * 加载 gltf 模型
+       */
       const scene = this.scene
       const gltfModel = await Promise.all(gltfList.map(gltfItem => scene.assets.loadAsset({
         type: 'gltf',
@@ -73,6 +88,11 @@ Component({
       this.setData({ gltfLoaded: true })
     },
     async loadVideoSingle(videoItem) {
+      /**
+       * 加载视频
+       * 初始化视频纹理
+       * 视频材质绑定材质
+       */
       const scene = this.scene
       const videoTexture = await scene.assets.loadAsset({
         type: 'video-texture',
@@ -93,6 +113,9 @@ Component({
       })
     },
     releaseVideo(id) {
+      /**
+       * 释放视频资源
+       */
       if (id !== -1) {
         // 存在纹理才进行释放
         const scene = this.scene
@@ -102,6 +125,13 @@ Component({
       }
     },
     handleTrackerSwitch({ detail }) {
+      /**
+       * ar 识别结果回调
+       * 根据识别结果决定怎么展示
+       * 1. 视频结果-释放上次视频资源，加载视频资源，对应标签可见
+       * 2. 扫描识别框-处理识别框大小，对应标签可见
+       * 3. gltf模型-选择gltf模型，并显示
+       */
       console.log('tracked match')
       if (this.data.loaded) {
         const element = detail.el;
@@ -128,6 +158,7 @@ Component({
               case 'gltf': // gltf
                 break;
             }
+            // 触发通知事件
             this.triggerEvent('trackerchange', {
               name: markerInfo.name,
               active: active,
@@ -225,6 +256,11 @@ Component({
 
     },
     videoHanler(markerInfo) {
+      /**
+       * 视频素材处理
+       * 处理视频展示大小比例
+       * 加载视频
+       */
       this.setData({
         videoLoaded: false,
         videoRatioLoaded: false,

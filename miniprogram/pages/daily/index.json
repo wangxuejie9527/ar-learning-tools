@@ -1,8 +1,6 @@
 {
-  "navigationBarTitleText": "text",
-  "componentFramework": "glass-easel",
-  "renderer": "webview",
+  "usingComponents": {
+  },
   "disableScroll": true,
-  "navigationStyle": "custom",
-  "usingComponents": {}
+  "navigationStyle": "custom"
 }

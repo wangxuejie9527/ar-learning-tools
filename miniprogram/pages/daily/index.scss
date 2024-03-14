@@ -1,68 +1,66 @@
-/* pages/Daily/index.wxss */
-// @import "../../common/reset.wxss";
-page, view, text, image, button, video, map, scroll-view, swiper, input, textarea, navigator {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-content: flex-start;
-  align-items: stretch;
+view, swiper-item {
   box-sizing: border-box;
-  background-origin: border-box;
 }
 
-page {
-  height: 100vh;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-navigator text,
-text text,
-text navigator {
-  display: inline;
-}
-
-image {
-  align-self: flex-start;
-}
-
-.wx-scroll-view-flex :is(div):not(.wx-scroll-view-flex) {
-  width: auto!important;
-}
-
-.page-scroll-view {
-  flex: 1;
-  overflow: auto;
-}
-
-
-button{
-  margin: 20px 0;
-}
-.text-box{
-  margin-bottom: 35px;
-  padding: 20px 0;
+.tab-container {
   display: flex;
-  min-height: 150px;
-  background-color: #FFFFFF;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.tab-list {
+  display: flex;
+  flex-direction: row;
+  margin: 5px 24px 0;
+  position: relative;
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex: 1;
+  height: 50px;
+  border-bottom: 0.5px solid white;
+}
+
+.tab-item.active {
+  color: #07c160;
+}
+
+.tab-border {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  background-color:  #07c160;
+  width: 49%;
+  transform: translateX(0) scaleX(0.7);
+  z-index: 1;
+}
+
+.scroll-list {
+  flex: 1;
+  width: 100%;
+  overflow: hidden;
+}
+
+swiper-item {
+  padding: 30px;
+}
+
+.item-image {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  font-size: 15px;
-  color: #353535;
-  line-height: 2;
-}
-
-.mini-btn{
-  margin-right: 5px;
-}
-
-/* widget */
-.btn-area{
-  margin-top: 30px;
-  box-sizing: border-box;
   width: 100%;
-  padding: 0 15px;
+}
+
+.item-title {
+  padding: 20px 0 8px 0;
+  font-size: 18px;
 }

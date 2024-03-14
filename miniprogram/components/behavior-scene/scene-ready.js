@@ -25,6 +25,7 @@ module.exports = Behavior({
     const windowHeight = info.windowHeight;
     const height = windowHeight * this.data.heightScale;
     const dpi = info.pixelRatio;
+    console.log('info', info)
     this.setData({
       width,
       height,

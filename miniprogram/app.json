@@ -1,6 +1,6 @@
 {
   "pages": [
-    "pages/daily/index",
+    "pages/index/index",
     "pages/tracker/index"
   ],
   "tabBar": {
@@ -10,7 +10,7 @@
     "backgroundColor": "#F7F7F7",
     "list": [
       {
-        "pagePath": "pages/daily/index",
+        "pagePath": "pages/index/index",
         "iconPath": "assets/image/icon_component.png",
         "selectedIconPath": "assets/image/icon_component_HL.png",
         "text": "每日一句"

@@ -1,4 +1,5 @@
 <mp-navigation-bar title="每日一句" back="{{false}}"></mp-navigation-bar>
+
 <view class="tab-container">
   <view class="tab-list">
     <view wx:for="{{tabs}}" wx:key="title" class="tab-item {{selectedTab === index ? 'active' : ''}}" data-tab="{{index}}" bindtap="onTapTab">

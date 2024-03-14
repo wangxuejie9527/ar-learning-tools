@@ -1,0 +1,26 @@
+<!--pages/Daily/index.wxml-->
+<mp-navigation-bar title="{{title}}" back="{{false}}"></mp-navigation-bar>
+<scroll-view class="page-scroll-view" scroll-y type="list">
+  <view class="container page">
+    <view class="page-body">
+      <view class="page-section page-section-spacing">
+        <view class="text-box" scroll-y="true" scroll-top="{{scrollTop}}">
+          <block>
+            <text>{{content}}</text>
+          </block>
+        </view>
+        <view class="btn-area" id="buttonContainer">
+          <view style="flex-direction: row;">
+            <button class="mini-btn" type="primary" disabled="{{!canExplain}}" bindtap="explainFunc">查看解释</button>
+          </view>
+        </view>
+
+        <view wx:if="{{showExplain}}" class="text-box" scroll-y="true" scroll-top="{{scrollTop}}">
+          <block>
+            <text>{{explainContent}}</text>
+          </block>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

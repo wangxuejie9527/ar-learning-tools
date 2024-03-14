@@ -1,0 +1,68 @@
+/* pages/Daily/index.wxss */
+// @import "../../common/reset.wxss";
+page, view, text, image, button, video, map, scroll-view, swiper, input, textarea, navigator {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: stretch;
+  box-sizing: border-box;
+  background-origin: border-box;
+}
+
+page {
+  height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+navigator text,
+text text,
+text navigator {
+  display: inline;
+}
+
+image {
+  align-self: flex-start;
+}
+
+.wx-scroll-view-flex :is(div):not(.wx-scroll-view-flex) {
+  width: auto!important;
+}
+
+.page-scroll-view {
+  flex: 1;
+  overflow: auto;
+}
+
+
+button{
+  margin: 20px 0;
+}
+.text-box{
+  margin-bottom: 35px;
+  padding: 20px 0;
+  display: flex;
+  min-height: 150px;
+  background-color: #FFFFFF;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 15px;
+  color: #353535;
+  line-height: 2;
+}
+
+.mini-btn{
+  margin-right: 5px;
+}
+
+/* widget */
+.btn-area{
+  margin-top: 30px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 15px;
+}

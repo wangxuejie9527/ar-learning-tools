@@ -58,9 +58,11 @@ Component({
     const rect = wx.getMenuButtonBoundingClientRect
         ? wx.getMenuButtonBoundingClientRect()
         : null
+    console.log('rect', rect);
     wx.getSystemInfo({
         success: (res) => {
             const ios = !!(res.system.toLowerCase().search('ios') + 1)
+            console.log('res', res)
             this.setData({
                 ios,
                 statusBarHeight: res.statusBarHeight,
@@ -70,21 +72,12 @@ Component({
                     ? `padding-right:${res.windowWidth - rect.left}px`
                     : '',
                 leftWidth: isSupport ? `width:${res.windowWidth - rect.left}px` : '',
-                theme: res.theme || 'light',
             })
         }
     })
 
-    if (wx.onThemeChange) {
-      wx.onThemeChange(({theme}) => {
-        this.setData({theme})
-      })
-    }
   },
   detached() {
-    if (wx.offThemeChange) {
-      wx.offThemeChange()
-    }
   },
   /**
    * 组件的方法列表
@@ -104,25 +97,5 @@ Component({
               displayStyle
           })
       },
-      back() {
-          const data = this.data
-          console.log('---------222',getCurrentPages().length)
-          if (data.delta) {
-              wx.navigateBack({
-                  delta: data.delta
-              })
-          }
-          // 如果是直接打开的，就默认回首页
-          if (getCurrentPages().length == 1) {
-            console.log('---------333')
-            wx.switchTab({
-              url: '/page/component/index',
-              complete: (res) => {
-                console.log(res)
-              }
-            })
-          }
-          this.triggerEvent('back', { delta: data.delta }, {})
-      }
   }
 })

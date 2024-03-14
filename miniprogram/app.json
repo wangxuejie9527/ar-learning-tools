@@ -1,11 +1,39 @@
 {
   "pages": [
+    "pages/daily/index",
     "pages/tracker/index"
   ],
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#F7F7F7",
+    "list": [
+      {
+        "pagePath": "pages/daily/index",
+        "iconPath": "assets/image/icon_component.png",
+        "selectedIconPath": "assets/image/icon_component_HL.png",
+        "text": "每日一句"
+      },
+      {
+        "pagePath": "pages/tracker/index",
+        "iconPath": "assets/image/icon_component.png",
+        "selectedIconPath": "assets/image/icon_component_HL.png",
+        "text": "扫一扫"
+      }
+    ]
+  },
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Learning Tools",
-    "navigationBarBackgroundColor": "#ffffff"
+    "navigationBarBackgroundColor": "#F7F7F7",
+    "backgroundColor": "#F7F7F7",
+    "navigationBarTitleText": "Learning Tools"
+  },
+  "usingComponents": {
+    "mp-navigation-bar": "/components/navigation-bar/navigation-bar"
+  },
+  "useExtendedLib": {
+    "weui": "latest"
   },
   "style": "v2",
   "componentFramework": "glass-easel",

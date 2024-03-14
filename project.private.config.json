@@ -3,6 +3,7 @@
   "projectname": "ar-learning-tools",
   "libVersion": "3.3.4",
   "setting": {
-    "compileHotReLoad": true
+    "compileHotReLoad": true,
+    "skylineRenderEnable": true
   }
 }

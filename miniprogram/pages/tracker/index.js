@@ -32,7 +32,7 @@ Page({
   },
   onLoad( ) {
     // 初始化云服务
-    this.initCloud();
+    // this.initCloud();
     // 初始化数据
     this.refreshData();
   },

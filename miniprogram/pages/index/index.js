@@ -3,25 +3,23 @@ const ScrollState = {
   scrollUpdate: 1,
   scrollEnd: 2,
 };
-
-const tabs = [{
-    title: '每日精选',
-    title2: '打招呼常用语句',
-    img: 'http://mmbiz.qpic.cn/mmbiz_jpg/PxLPibq1ibyh0U4e0qLqNrULAUzW5UbWbicUN5GyJqd24GR0Ricg5q14VGGBWlicNca8x4xelvDrM1r0ibwAjAsR0bOA/0?wx_fmt=jpeg',
-    desc: 'Hi, My name is LiLei.',
-  },
-  {
-    title: '释义',
-    title2: '',
-    img: 'http://mmbiz.qpic.cn/sz_mmbiz_png/GEWVeJPFkSH05EZMIBafqzpoZVSXtCE47V7icf0gru4KPUzMjIcIibJPUlXqbZib4VNmTecxef987XEWib2vhwuqbQ/0?wx_fmt=png',
-    desc: 'Hi, My name is LiLei. \n /haɪ/, /maɪ/ /neɪm/ /ɪz/ LiLei. \n 你好，我的名字是李雷。',
-  }
-];
-
+var util = require('../../utils/util');
 Page({
   data: {
     selectedTab: 0,
-    tabs,
+    tabs: [{
+        title: '每日精选',
+        title2: '打招呼常用语句',
+        img: '/assets/image/1.jpg',
+        desc: 'dddddd ',
+      },
+      {
+        title: '释义',
+        title2: '',
+        img: '/assets/image/1.jpg',
+        desc: 'ffff',
+      }
+    ],
     translateX: 0
   },
   onLoad() {
@@ -35,6 +33,38 @@ Page({
     this._lastTranslateX = shared(0)
     this._scaleX = shared(0.7)
     this._windowWidth = shared(windowWidth)
+    const date = util.formatTimeYYMMDD(new Date)
+    console.log('date', date);
+    let that = this
+    const db = wx.cloud.database();
+    db.collection('ar-tracker').where({
+      type: 'daily',
+      date: date,
+    }).limit(1).get({
+      success: function (res) {
+        console.log(res)
+        if (res.length < 1) {
+          return;
+        }
+        var dbRes = res.data[0]
+        var newTabs = [{
+            title: '每日精选',
+            title2: '打招呼常用语句',
+            img: dbRes.coverImg,
+            desc: dbRes.text,
+          },
+          {
+            title: '释义',
+            title2: '',
+            img: dbRes.explainImg,
+            desc: dbRes.explain.replace(/\\n/g, '\n').replace(/\\'/g,'\''),
+          }
+        ];
+        that.setData({
+          tabs: newTabs
+        })
+      }
+    })
   },
   onUnload() {
     this.applyAnimatedStyle('.tab-border', () => {

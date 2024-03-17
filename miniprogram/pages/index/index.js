@@ -3,7 +3,12 @@ const ScrollState = {
   scrollUpdate: 1,
   scrollEnd: 2,
 };
+const audioCtx = wx.createInnerAudioContext({
+  useWebAudioImplement: false 
+})
+
 var util = require('../../utils/util');
+
 Page({
   data: {
     selectedTab: 0,
@@ -60,6 +65,7 @@ Page({
             desc: dbRes.explain.replace(/\\n/g, '\n').replace(/\\'/g,'\''),
           }
         ];
+        audioCtx.src = dbRes.tts
         that.setData({
           tabs: newTabs
         })
@@ -117,5 +123,8 @@ Page({
 
     // end
     this._lastTranslateX.value = this._translateX.value
+  },
+  audioPlay: function () {
+    audioCtx.play()
   }
 })

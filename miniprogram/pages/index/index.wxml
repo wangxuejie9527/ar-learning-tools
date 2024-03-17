@@ -11,7 +11,12 @@
     <swiper-item wx:for="{{tabs}}" wx:key="title">
       <image class="item-image" src="{{item.img}}" mode="widthFix"></image>
       <view class="item-title">{{item.title2}}</view>
-      <view><text>{{item.desc}}</text></view>
+      <view class="item-audio">
+        <text>{{item.desc}}</text>
+        <view wx:if="{{item.title == '每日精选'}}" bind:tap="audioPlay">
+          <image style="width: 20px; height: 20px;" mode="aspectFit" src="/assets/image/sound-active.5a951733.png"></image>
+        </view>
+      </view>
     </swiper-item>
   </swiper>
 </view>

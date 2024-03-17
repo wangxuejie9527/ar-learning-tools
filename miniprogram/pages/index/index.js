@@ -3,9 +3,7 @@ const ScrollState = {
   scrollUpdate: 1,
   scrollEnd: 2,
 };
-const audioCtx = wx.createInnerAudioContext({
-  useWebAudioImplement: false 
-})
+const audioCtx = wx.createInnerAudioContext({})
 
 var util = require('../../utils/util');
 
@@ -29,6 +27,7 @@ Page({
   },
   onLoad() {
     const shared = wx.worklet.shared
+    audioCtx.obeyMuteSwitch = false
     const {
       windowWidth
     } = wx.getSystemInfoSync()
@@ -125,6 +124,7 @@ Page({
     this._lastTranslateX.value = this._translateX.value
   },
   audioPlay: function () {
+    console.log('audioPlay')
     audioCtx.play()
   }
 })

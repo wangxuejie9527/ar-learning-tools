@@ -81,13 +81,13 @@ Page({
         var newTabs = [{
             title: '每日精选',
             title2: '打招呼常用语句',
-            img: '/assets/image/cover.jpeg',
+            img: dbRes.coverImg,
             desc: dbRes.text,
           },
           {
             title: '释义',
             title2: '',
-            img: '/assets/image/ex.jpeg',
+            img: dbRes.explainImg,
             desc: dbRes.explain.replace(/\\n/g, '\n').replace(/\\'/g,'\''),
           }
         ];

@@ -2,6 +2,9 @@
  * 每日一句页面
  */
 
+// 导入函数
+var sceneReadyBehavior = require('../../components/behavior-scene/scene-ready');
+var util = require('../../utils/util');
 
 /**
  * tabs 初始定义
@@ -18,9 +21,8 @@ const ScrollState = {
 // 初始化音频播放器
 const audioCtx = wx.createInnerAudioContext({})
 
-var util = require('../../utils/util');
-
 Page({
+  behaviors:[sceneReadyBehavior],
   data: {
     // 起始被选中tab
     selectedTab: 0,
@@ -55,7 +57,7 @@ Page({
     } = wx.getSystemInfoSync()
     // 计算每个tab大小 和 tab切换动画
     const innerWindowWidth = windowWidth - 48 // 左右 padding 各 24
-    this._tabWidth = shared(innerWindowWidth / 2) // 通过 boundingClientRect 算也行
+    this._tabWidth = shared(innerWindowWidth / 2)
     this._translateX = shared(0)
     this._lastTranslateX = shared(0)
     this._scaleX = shared(0.7)
@@ -79,13 +81,13 @@ Page({
         var newTabs = [{
             title: '每日精选',
             title2: '打招呼常用语句',
-            img: dbRes.coverImg,
+            img: '/assets/image/cover.jpeg',
             desc: dbRes.text,
           },
           {
             title: '释义',
             title2: '',
-            img: dbRes.explainImg,
+            img: '/assets/image/ex.jpeg',
             desc: dbRes.explain.replace(/\\n/g, '\n').replace(/\\'/g,'\''),
           }
         ];

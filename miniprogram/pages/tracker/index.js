@@ -66,7 +66,10 @@ Page({
 
     // 读取数据，初始化需要的识别信息
     const db = wx.cloud.database();
-    db.collection('ar-tracker').get({
+    const _ = db.command
+    db.collection('ar-tracker').where({
+      type : _.neq('daily'),
+    }).get({
       success: function (res) {
         const data = res.data
         console.log(data)

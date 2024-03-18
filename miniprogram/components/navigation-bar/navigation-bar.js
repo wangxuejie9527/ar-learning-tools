@@ -1,3 +1,6 @@
+/**
+ * 自定义导航栏组件
+ */
 Component({
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
@@ -54,6 +57,8 @@ Component({
     displayStyle: ''
   },
   attached() {
+    // 获取小程序右上角菜单按钮的大小 不同机型不一样
+    // 根据菜单按钮大小计算导航栏高度和左偏移宽度
     const rect = wx.getMenuButtonBoundingClientRect()
     wx.getSystemInfo({
       success: (res) => {
@@ -70,6 +75,10 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    /**
+     * 显示隐藏导航，隐藏的时候navigation-bar的高度占位还在
+     * @param {*} show 
+     */
     _showChange(show) {
       const animated = this.data.animated
       let displayStyle = ''
@@ -82,9 +91,13 @@ Component({
         displayStyle
       })
     },
+    /**
+     * 导航栏返回按钮触发函数
+     */
     back() {
       const data = this.data
       if (data.delta) {
+        // 返回上级页面
         wx.navigateBack({
           delta: data.delta
         })

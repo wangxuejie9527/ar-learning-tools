@@ -1,15 +1,30 @@
+/**
+ * 每日一句页面
+ */
+
+
+/**
+ * tabs 初始定义
+ * 开始于
+ * skip
+ * 结束于
+ */
 const ScrollState = {
   scrollStart: 0,
   scrollUpdate: 1,
   scrollEnd: 2,
 };
+
+// 初始化音频播放器
 const audioCtx = wx.createInnerAudioContext({})
 
 var util = require('../../utils/util');
 
 Page({
   data: {
+    // 起始被选中tab
     selectedTab: 0,
+    // tab 初始定义
     tabs: [{
         title: '每日精选',
         title2: '打招呼常用语句',
@@ -23,14 +38,22 @@ Page({
         desc: 'ffff',
       }
     ],
+    // tab 切换动画 对x轴平移
     translateX: 0
   },
+  /**
+   * 页面加载中需要处理内容
+   */
   onLoad() {
+    // 创建共享变量 SharedValue，用于跨线程共享数据和驱动动画。
     const shared = wx.worklet.shared
+    // 音频播放器静音
     audioCtx.obeyMuteSwitch = false
+    // 获取手机屏幕宽度
     const {
       windowWidth
     } = wx.getSystemInfoSync()
+    // 计算每个tab大小 和 tab切换动画
     const innerWindowWidth = windowWidth - 48 // 左右 padding 各 24
     this._tabWidth = shared(innerWindowWidth / 2) // 通过 boundingClientRect 算也行
     this._translateX = shared(0)
@@ -39,6 +62,8 @@ Page({
     this._windowWidth = shared(windowWidth)
     const date = util.formatTimeYYMMDD(new Date)
     console.log('date', date);
+
+    // 数据库加载每日一句内容
     let that = this
     const db = wx.cloud.database();
     db.collection('ar-tracker').where({
@@ -72,6 +97,7 @@ Page({
     })
   },
   onUnload() {
+    // 初始化动画类型为worklet
     this.applyAnimatedStyle('.tab-border', () => {
       'worklet'
       return {
@@ -79,6 +105,7 @@ Page({
       }
     })
   },
+  // tab 点击触发事件
   onTapTab(evt) {
     const {
       tab
@@ -87,12 +114,13 @@ Page({
       selectedTab: tab,
     })
   },
-
+  // tab 切换事件
   onTabChanged(evt) {
     const index = evt.detail.current
     this.setData({
       selectedTab: index,
     })
+    // 设置动画平移多少
     if (this.renderer !== 'skyline') {
       this.setData({
         translateX: this._tabWidth.value * index
@@ -123,6 +151,7 @@ Page({
     // end
     this._lastTranslateX.value = this._translateX.value
   },
+  // 播放翻译语音
   audioPlay: function () {
     console.log('audioPlay')
     audioCtx.play()

@@ -20,6 +20,9 @@ module.exports = Behavior({
   },
   attached: function(){},
   ready() {
+    /**
+     * 函数就绪后加载小程序设备信息
+     */
     const info = wx.getSystemInfoSync();
     const width = info.windowWidth;
     const windowHeight = info.windowHeight;
@@ -35,16 +38,25 @@ module.exports = Behavior({
     });
   },
   methods: {
+    /**
+     * 加载后上报信息，统计使用
+     * @param {*} options 
+     */
     onLoad(options) {
       wx.reportEvent("xr_frame", {
         "xr_page_path": options.path
       });
     },
+    /**
+     * 分享按钮功能 用户点击右上角转发
+     * @returns title-分享页面的标题 imageUrl-分享展示的图片url
+     */
     onShareAppMessage() {
       try {
         if (wx.xrScene) {
+          // 保存当前界面生成图片
           const buffer = wx.xrScene.share.captureToArrayBuffer({quality: 0.5});
-          const fp = `${wx.env.USER_DATA_PATH}/xr-frame-share.jpg`;
+          const fp = `${wx.env.USER_DATA_PATH}/ar-learning-tools-share.jpg`;
           wx.getFileSystemManager().writeFileSync(fp, buffer, 'binary');
           return {
             title: this.getTitle(),
@@ -57,11 +69,16 @@ module.exports = Behavior({
         };
       }
     },
+    /**
+     * 用户点击右上角转发到朋友圈 触发
+     * @returns 
+     */
     onShareTimeline() {
       try {
+        // 如果是xr框架页面
         if (wx.xrScene) {
           const buffer = wx.xrScene.share.captureToArrayBuffer({quality: 0.5});
-          const fp = `${wx.env.USER_DATA_PATH}/xr-frame-share.jpg`;
+          const fp = `${wx.env.USER_DATA_PATH}/ar-learning-tools-share.jpg`;
           wx.getFileSystemManager().writeFileSync(fp, buffer, 'binary');
           return {
             title: this.getTitle(),
@@ -74,9 +91,11 @@ module.exports = Behavior({
         }
       }
     },
+    // 生成分享标题
     getTitle() {
-      return wx.xrTitle ? `XR - ${wx.xrTitle}` : 'XR-FRAME官方示例';
+      return wx.xrTitle ? `XR - ${wx.xrTitle}` : 'AR 学习助手';
     },
+    // xr 识别状态处理函数
     handleARTrackerState({detail}) {
       const {state, error} = detail;
       this.setData({

@@ -1,3 +1,8 @@
+/**
+ * 忽略这个文件
+ * @param {*} decodedXml 
+ * @returns 
+ */
 var handleDecodedXML = function(decodedXml) {
   let rerurnXml = '';
 

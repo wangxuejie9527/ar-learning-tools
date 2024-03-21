@@ -28,7 +28,7 @@ Page({
     selectedTab: 0,
     // tab 初始定义
     tabs: [{
-        title: '每日精选',
+        title: '每日一句',
         title2: '打招呼常用语句',
         img: '/assets/image/1.jpg',
         desc: 'dddddd ',
@@ -79,14 +79,14 @@ Page({
         }
         var dbRes = res.data[0]
         var newTabs = [{
-            title: '每日精选',
-            title2: '打招呼常用语句',
+            title: dbRes.tab1Title,
+            title2: dbRes.tab1Title2,
             img: dbRes.coverImg,
-            desc: dbRes.text,
+            desc: dbRes.text.replace(/\\n/g, '\n').replace(/\\'/g,'\''),
           },
           {
-            title: '释义',
-            title2: '',
+            title: dbRes.tab2Title,
+            title2: dbRes.tab2Title2,
             img: dbRes.explainImg,
             desc: dbRes.explain.replace(/\\n/g, '\n').replace(/\\'/g,'\''),
           }

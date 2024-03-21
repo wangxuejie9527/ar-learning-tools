@@ -13,7 +13,7 @@
         "pagePath": "pages/index/index",
         "iconPath": "assets/image/icon_component.png",
         "selectedIconPath": "assets/image/icon_component_HL.png",
-        "text": "每日一句"
+        "text": "每日精选"
       },
       {
         "pagePath": "pages/tracker/index",

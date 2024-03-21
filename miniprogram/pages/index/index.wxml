@@ -1,4 +1,4 @@
-<mp-navigation-bar title="每日精选" back="{{false}}"></mp-navigation-bar>
+<mp-navigation-bar title="每日精选" back="{{false}}" bind:tap="bindNavTab"></mp-navigation-bar>
 
 <view class="tab-container">
   <view class="tab-list">

@@ -62,46 +62,8 @@ Page({
     this._lastTranslateX = shared(0)
     this._scaleX = shared(0.7)
     this._windowWidth = shared(windowWidth)
-    const date = util.formatTimeYYMMDD(new Date)
-    console.log('date', date);
 
-    // 数据库加载每日一句内容
-    let that = this
-    const db = wx.cloud.database();
-    let randomCategory = 'English';
-    if (Math.random() * 10 > 4) {
-      randomCategory = 'Math'
-    }
-    db.collection('ar-tracker').where({
-      type: 'daily',
-      date: date,
-      category: randomCategory
-    }).limit(1).get({
-      success: function (res) {
-        console.log(res)
-        if (res.length < 1) {
-          return;
-        }
-        var dbRes = res.data[0]
-        var newTabs = [{
-            title: dbRes.tab1Title,
-            title2: dbRes.tab1Title2,
-            img: dbRes.coverImg,
-            desc: dbRes.text.replace(/\\n/g, '\n').replace(/\\'/g, '\''),
-          },
-          {
-            title: dbRes.tab2Title,
-            title2: dbRes.tab2Title2,
-            img: dbRes.explainImg,
-            desc: dbRes.explain.replace(/\\n/g, '\n').replace(/\\'/g, '\''),
-          }
-        ];
-        audioCtx.src = dbRes.tts
-        that.setData({
-          tabs: newTabs
-        })
-      }
-    })
+    this.refreshData();
   },
   onUnload() {
     // 初始化动画类型为worklet
@@ -157,6 +119,50 @@ Page({
 
     // end
     this._lastTranslateX.value = this._translateX.value
+  },
+  refreshData() {
+    const date = util.formatTimeYYMMDD(new Date)
+    console.log('date', date);
+    // 数据库加载每日一句内容
+    let that = this
+    const db = wx.cloud.database();
+    let randomCategory = 'English';
+    if (Math.random() * 10 > 4) {
+      randomCategory = 'Math'
+    }
+    db.collection('ar-tracker').where({
+      type: 'daily',
+      date: date,
+      category: randomCategory
+    }).limit(1).get({
+      success: function (res) {
+        console.log(res)
+        if (res.length < 1) {
+          return;
+        }
+        var dbRes = res.data[0]
+        var newTabs = [{
+            title: dbRes.tab1Title,
+            title2: dbRes.tab1Title2,
+            img: dbRes.coverImg,
+            desc: dbRes.text.replace(/\\n/g, '\n').replace(/\\'/g, '\''),
+          },
+          {
+            title: dbRes.tab2Title,
+            title2: dbRes.tab2Title2,
+            img: dbRes.explainImg,
+            desc: dbRes.explain.replace(/\\n/g, '\n').replace(/\\'/g, '\''),
+          }
+        ];
+        audioCtx.src = dbRes.tts
+        that.setData({
+          tabs: newTabs
+        })
+      }
+    })
+  },
+  bindNavTab(){
+    this.refreshData();
   },
   // 播放翻译语音
   audioPlay: function () {

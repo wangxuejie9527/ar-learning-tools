@@ -13,7 +13,7 @@
       <view class="item-title">{{item.title2}}</view>
       <view class="item-audio">
         <text>{{item.desc}}</text>
-        <view wx:if="{{item.title == '每日精选'}}" bind:tap="audioPlay">
+        <view wx:if="{{item.title == '每日一句'}}" bind:tap="audioPlay">
           <image style="width: 20px; height: 20px;" mode="aspectFit" src="/assets/image/sound-active.5a951733.png"></image>
         </view>
       </view>

@@ -22,7 +22,7 @@ const ScrollState = {
 const audioCtx = wx.createInnerAudioContext({})
 
 Page({
-  behaviors:[sceneReadyBehavior],
+  behaviors: [sceneReadyBehavior],
   data: {
     // 起始被选中tab
     selectedTab: 0,
@@ -68,9 +68,14 @@ Page({
     // 数据库加载每日一句内容
     let that = this
     const db = wx.cloud.database();
+    let randomCategory = 'English';
+    if (Math.random() * 10 > 4) {
+      randomCategory = 'Math'
+    }
     db.collection('ar-tracker').where({
       type: 'daily',
       date: date,
+      category: randomCategory
     }).limit(1).get({
       success: function (res) {
         console.log(res)
@@ -82,13 +87,13 @@ Page({
             title: dbRes.tab1Title,
             title2: dbRes.tab1Title2,
             img: dbRes.coverImg,
-            desc: dbRes.text.replace(/\\n/g, '\n').replace(/\\'/g,'\''),
+            desc: dbRes.text.replace(/\\n/g, '\n').replace(/\\'/g, '\''),
           },
           {
             title: dbRes.tab2Title,
             title2: dbRes.tab2Title2,
             img: dbRes.explainImg,
-            desc: dbRes.explain.replace(/\\n/g, '\n').replace(/\\'/g,'\''),
+            desc: dbRes.explain.replace(/\\n/g, '\n').replace(/\\'/g, '\''),
           }
         ];
         audioCtx.src = dbRes.tts

@@ -41,7 +41,8 @@ Page({
       }
     ],
     // tab 切换动画 对x轴平移
-    translateX: 0
+    translateX: 0,
+    isEnglishCategory: true
   },
   /**
    * 页面加载中需要处理内容
@@ -126,14 +127,11 @@ Page({
     // 数据库加载每日一句内容
     let that = this
     const db = wx.cloud.database();
-    let randomCategory = 'English';
-    if (Math.random() * 10 > 4) {
-      randomCategory = 'Math'
-    }
+
     db.collection('ar-tracker').where({
       type: 'daily',
       date: date,
-      category: randomCategory
+      category: this.data.isEnglishCategory ? 'English' : 'Math'
     }).limit(1).get({
       success: function (res) {
         console.log(res)
@@ -161,7 +159,10 @@ Page({
       }
     })
   },
-  bindNavTab(){
+  bindNavTab() {
+    this.setData({
+      isEnglishCategory: !this.data.isEnglishCategory
+    })
     this.refreshData();
   },
   // 播放翻译语音
